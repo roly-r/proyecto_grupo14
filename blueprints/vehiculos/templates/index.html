@@ -1,0 +1,33 @@
+{% include 'header.html' %}
+
+<div class="container mt-5">
+    <h1>Listado de Vehículos</h1>
+    <table class="table">
+      <thead>
+          <tr>
+              <th>ID</th>
+              <th>Marca</th>
+              <th>Modelo</th>
+              <th>Color</th>
+              <th>Acciones</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for vehiculo in vehiculos %}
+          <tr>
+              <td>{{ vehiculo['id'] }}</td>
+              <td>{{ vehiculo['marca'] }}</td>
+              <td>{{ vehiculo['modelo'] }}</td>
+              <td>{{ vehiculo['color'] }}</td>
+              <td>
+                  <a href="{{ url_for('vehiculos.editar', id=vehiculo['id']) }}">Editar</a> | 
+                  <a href="{{ url_for('vehiculos.eliminar', id=vehiculo['id']) }}" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
+              </td>
+          </tr>
+          {% endfor %}
+      </tbody>
+    </table>
+    <a href="{{ url_for('vehiculos.crear') }}" class="btn btn-primary">Crear Nuevo Vehículo</a>
+</div>
+
+{% include 'footer.html' %}
