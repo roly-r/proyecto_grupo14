@@ -13,15 +13,15 @@
           </tr>
       </thead>
       <tbody>
-          {% for vehiculo in vehiculos %}
+          {% for vehiculos in vehiculos %}
           <tr>
-              <td>{{ vehiculo['id'] }}</td>
-              <td>{{ vehiculo['marca'] }}</td>
-              <td>{{ vehiculo['modelo'] }}</td>
-              <td>{{ vehiculo['color'] }}</td>
+              <td>{{ vehiculos['id'] }}</td>
+              <td>{{ vehiculos['marca'] }}</td>
+              <td>{{ vehiculos['modelo'] }}</td>
+              <td>{{ vehiculos['color'] }}</td>
               <td>
-                  <a href="{{ url_for('vehiculos.editar', id=vehiculo['id']) }}">Editar</a> | 
-                  <a href="{{ url_for('vehiculos.eliminar', id=vehiculo['id']) }}" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
+                  <a href="{{ url_for('vehiculos.editar', id=vehiculos['id']) }}">Editar</a> | 
+                  <a href="{{ url_for('vehiculos.eliminar', id=vehiculos['id']) }}" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
               </td>
           </tr>
           {% endfor %}

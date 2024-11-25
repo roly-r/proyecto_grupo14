@@ -4,20 +4,25 @@ import sqlite3
 vehiculos_bp = Blueprint('vehiculos', __name__, template_folder='templates')
 
 # Función para obtener todos los vehículos de la base de datos
-def get_all_vehiculos():
+# def get_all_vehiculos():
+#     conn = sqlite3.connect("star_service.db")
+#     conn.row_factory = sqlite3.Row
+#     cursor = conn.cursor()
+#     cursor.execute("SELECT * FROM vehiculo")
+#     vehiculos = cursor.fetchall()
+#     conn.close()
+#     return vehiculos
+
+# Ruta para mostrar el listado de vehículos
+@vehiculos_bp.route("/")
+def index():
     conn = sqlite3.connect("star_service.db")
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM vehiculo")
     vehiculos = cursor.fetchall()
     conn.close()
-    return vehiculos
-
-# Ruta para mostrar el listado de vehículos
-@vehiculos_bp.route("/")
-def index():
-    vehiculos = get_all_vehiculos()
-    return render_template("index.html", vehiculos=vehiculos)
+    return render_template('index_vehiculo.html',vehiculos=vehiculos)
 
 # Ruta para crear un nuevo vehículo
 @vehiculos_bp.route("/crear", methods=["GET", "POST"])
