@@ -3,6 +3,7 @@ from blueprints.vehiculos import vehiculos_bp
 from blueprints.afiliados import afiliados_bp
 from blueprints.servicios import servicios_bp
 from blueprints.usuarios import usuarios_bp
+from blueprints.pagos import pagos_bp
 import sqlite3
 
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -17,6 +18,7 @@ app.register_blueprint(vehiculos_bp)
 app.register_blueprint(afiliados_bp)
 app.register_blueprint(servicios_bp)
 app.register_blueprint(usuarios_bp)
+app.register_blueprint(pagos_bp)
 
 @app.route("/")
 def home():
@@ -79,6 +81,19 @@ def init_database():
             password TEXT NOT NULL
         )
         """)
+    
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS COUTA_MENSUAL (
+            cod_pm INTEGER PRIMARY KEY AUTOINCREMENT,
+            ci TEXT NOT NULL,
+            monto REAL NOT NULL,
+            estado TEXT NOT NULL,
+            fecha TEXT NOT NULL,
+            descripcion TEXT,
+            mes TEXT NOT NULL,
+            FOREIGN KEY(ci) REFERENCES afiliado(ci)
+        )
+    """)
 
     conn.commit()
     conn.close()

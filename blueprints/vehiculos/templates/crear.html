@@ -1,6 +1,10 @@
 {% include 'header.html' %}
 <br><br><br>
+<h2 class="text-center">REGISTRAR VEHICULO</h2>
+<div class="container mt-5" style="max-width: 600px;">
 <form action="{{ url_for('vehiculos.crear') }}" method="POST">
+
+
     <div class="mb-3">
         <label for="ci_afiliado" class="form-label">CI Afiliado</label>
         <select name="ci_afiliado" class="form-control" required>
@@ -36,7 +40,11 @@
         <label for="observaciones">Observaciones</label>
         <textarea class="form-control" name="observaciones"></textarea>
     </div>
-    <button type="submit" class="btn btn-primary">Crear Vehículo</button>
+    <br>
+    <button type="submit" class="btn btn-primary">GUARDAR</button>
+
+
 </form>
+</div>
 
 {% include 'footer.html' %}
