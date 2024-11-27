@@ -1,0 +1,42 @@
+{% include 'header.html' %}
+
+<div class="container mt-5">
+    <h1>Listado de Usuarios</h1>
+    <table class="table">
+      <thead>
+          <tr>
+              <th>ID</th>
+              <th>NOMBRES</th>
+              <th>APELLIDOS</th>
+              <th>CELUDA DE IDENTIDAD</th>
+              <th>TIPO</th>
+              <th>FECHA NACIMIENTO</th>
+              <th>FECHA INCORPORACION</th>
+              <th>USERNAME</th>
+              <th>CONTRASEÑA</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for usuarios in usuarios %}
+          <tr>
+              <td>{{ usuarios['id_user'] }}</td>
+              <td>{{ usuarios['nombre'] }}</td>
+              <td>{{ usuarios['apellido'] }}</td>
+              <td>{{ usuarios['ci'] }}</td>
+              <td>{{ usuarios['tipo'] }}</td>
+              <td>{{ usuarios['fecha_nan'] }}</td>
+              <td>{{ usuarios['fecha_inc'] }}</td>
+              <td>{{ usuarios['username'] }}</td>
+              <td>{{ usuarios['password'] }}</td>
+              <td>
+                  <a href="{{ url_for('usuarios.editar_user', id_user=usuarios['id_user']) }}">Editar</a> | 
+                  <a href="{{ url_for('usuarios.eliminar_user', id_user=usuarios['id_user']) }}" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
+              </td>
+          </tr>
+          {% endfor %}
+      </tbody>
+    </table>
+    <a href="{{ url_for('usuarios.crear_user') }}" class="btn btn-primary">Crear Nuevo Usuario</a>
+</div>
+
+{% include 'footer.html' %}

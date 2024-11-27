@@ -1,0 +1,39 @@
+{% include 'header.html' %}
+
+<h1>LISTA DE AFILIADOS</h1>
+
+<a href="{{url_for('afiliados.afiliado_crear')}}" class="btn btn-outline-success">NUEVO</a>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">CI</th>
+        <th scope="col">NOMBRES</th>
+        <th scope="col">APELLIDOS</th>
+        <th scope="col">DIRECCION</th>
+        <th scope="col">FECHA NACIMIENTO</th>
+        <th scope="col">TELEFONO</th>
+        <th scope="col">FECHA INCORPORACION</th>
+        <th scope="col">NRO LICENCIA</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for item in afiliados %}
+      <tr>
+        <th scope="row">{{item['ci']}}</th>
+        <td>{{item['nombres']}}</td>
+        <td>{{item['apellidos']}}</td>
+        <td>{{item['direccion']}}</td>
+        <td>{{item['fecha_nacimiento']}}</td>
+        <td>{{item['telefono']}}</td>
+        <td>{{item['fecha_incorporacion']}}</td>
+        <td>{{item['nro_licencia']}}</td>
+        <td><a href="/edit/{{item.ci}}" class="btn btn-warning">EDITAR</a></td>
+        <td><a href="/borrar/{{item.ci}}" onclick="return(confirm('Esta seguro?'))" class="btn btn-danger">ELIMINAR</a></td>
+      </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+{% include 'footer.html' %}

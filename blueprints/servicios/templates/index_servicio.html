@@ -1,0 +1,36 @@
+{% include 'header.html' %}
+<br><br><br>
+<div class="container mt-5">
+    <h1>Listado de Servicios</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>CI Afiliado</th>
+                <th>Fecha</th>
+                <th>Monto</th>
+                <th>Descripcion</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for servicio in servicios %}
+            <tr>
+                <td>{{ servicio['id'] }}</td>
+                <td>{{ servicio['ci_afiliado'] }}</td>
+                <td>{{ servicio['fecha_pago_servicio'] }}</td>
+                <td>{{ servicio['monto'] }}</td>
+                <td>{{ servicio['descripcion'] }}</td>
+                <td>
+                    <a href="{{ url_for('servicios.editar', id=servicio['id']) }}">Editar</a> | 
+                    <a href="{{ url_for('servicios.eliminar', id=servicio['id']) }}" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <a href="{{ url_for('servicios.crear_s') }}" class="btn btn-primary">Crear Nuevo servicio</a>
+</div>
+
+{% include 'footer.html' %}

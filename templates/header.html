@@ -26,15 +26,63 @@
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="{{url_for('home') }}">Principal</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{{url_for('vehiculos.crear')}}">Vehículos crear</a>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Afiliado
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{{url_for('afiliados.index')}}">Lista de afiiados</a></li>
+                  <li><a class="dropdown-item" href="{{url_for('afiliados.afiliado_crear')}}">Nuevo afiliado</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{{url_for('vehiculos.index')}}">Vehículos</a>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Vehiculo
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{{url_for('vehiculos.index')}}">Lista de vehiculos</a></li>
+                  <li><a class="dropdown-item" href="{{url_for('vehiculos.crear')}}">Nuevo vehiculo</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{{url_for('vehiculos.editar',id=1)}}">Vehículos editar</a>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Servicio
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{{url_for('servicios.index')}}">Lista de servicios</a></li>
+                  <li><a class="dropdown-item" href="{{url_for('servicios.crear_s')}}">Nuevo servicio</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
               </li>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Usuario
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{{url_for('usuarios.index_user')}}">Lista de usuario</a></li>
+                  <li><a class="dropdown-item" href="{{url_for('usuarios.crear_user')}}">Nuevo usuario</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li>
+
               <li class="nav-item">
                 <a class="nav-link" href="#">Cerrar Sesión</a>
               </li>
