@@ -22,8 +22,8 @@
                 <td>{{ servicio['monto'] }}</td>
                 <td>{{ servicio['descripcion'] }}</td>
                 <td>
-                    <a href="{{ url_for('servicios.editar', id=servicio['id']) }}">Editar</a> | 
-                    <a href="{{ url_for('servicios.eliminar', id=servicio['id']) }}" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
+                    <a href="{{ url_for('servicios.editar_s', id=servicio['id']) }}">Editar</a> | 
+                    <a href="{{ url_for('servicios.eliminar_s', id=servicio['id']) }}" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
                 </td>
             </tr>
             {% endfor %}

@@ -28,7 +28,7 @@ def index():
 def create_pago():
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT ci FROM afiliado")
+    cursor.execute("SELECT nombres, ci FROM afiliado")
     afiliados = cursor.fetchall()
     conn.close()
     return render_template("create.html", afiliados=afiliados)
@@ -85,15 +85,23 @@ def buscar():
 def edit_pago(cod_pm):
     conn = get_db_connection()
     cursor = conn.cursor()
+    
+    # Obtener los datos del pago
     cursor.execute("SELECT * FROM COUTA_MENSUAL WHERE cod_pm = ?", (cod_pm,))
     pago = cursor.fetchone()
-    conn.close()
     
     if not pago:
+        conn.close()
         flash("Pago no encontrado", "danger")
         return redirect(url_for('pagos.index'))
+
+    # Obtener la lista de afiliados
+    cursor.execute("SELECT ci, nombres FROM afiliado")
+    afiliados = cursor.fetchall()
+    conn.close()
     
-    return render_template("edit_pago.html", pago=pago)
+    return render_template("edit_pago.html", pago=pago, afiliados=afiliados)
+
 
 # Actualizar pago
 @pagos_bp.route("/edit/update/<int:cod_pm>", methods=['POST'])

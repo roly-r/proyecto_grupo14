@@ -14,11 +14,11 @@ app = Flask(__name__)
 
 app.secret_key = 'miclavesecreta'
 
-app.register_blueprint(vehiculos_bp)
-app.register_blueprint(afiliados_bp)
-app.register_blueprint(servicios_bp)
-app.register_blueprint(usuarios_bp)
-app.register_blueprint(pagos_bp)
+app.register_blueprint(vehiculos_bp,url_preferix='/vehiculos')
+app.register_blueprint(afiliados_bp,url_preferix='/afiliados')
+app.register_blueprint(servicios_bp,url_preferix='/servicios')
+app.register_blueprint(usuarios_bp,url_preferix='/usuarios')
+app.register_blueprint(pagos_bp, url_prefix="/pagos")
 
 @app.route("/")
 def home():

@@ -50,8 +50,8 @@ def crear_s():
     return render_template("crear_s.html", afiliados=afiliados)
 
 
-@servicios_bp.route("/editar/<int:id>", methods=["GET", "POST"])
-def editar(id):
+@servicios_bp.route("/editar_s/<int:id>", methods=["GET", "POST"])
+def editar_s(id):
     conn = sqlite3.connect("star_service.db")
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
@@ -87,11 +87,11 @@ def editar(id):
     afiliados = cursor.fetchall()
     conn.close()
 
-    return render_template("editar.html", servicio=servicio, afiliados=afiliados)
+    return render_template("editar_s.html", servicio=servicio, afiliados=afiliados)
 
 
-@servicios_bp.route("/eliminar/<int:id>")
-def eliminar(id):
+@servicios_bp.route("/eliminar_s/<int:id>")
+def eliminar_s(id):
     conn = sqlite3.connect("star_service.db")
     cursor = conn.cursor()
     cursor.execute("DELETE FROM servicio WHERE id = ?", (id,))

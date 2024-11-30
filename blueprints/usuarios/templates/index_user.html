@@ -13,7 +13,6 @@
               <th>FECHA NACIMIENTO</th>
               <th>FECHA INCORPORACION</th>
               <th>USERNAME</th>
-              <th>CONTRASEÑA</th>
           </tr>
       </thead>
       <tbody>
@@ -27,7 +26,6 @@
               <td>{{ usuarios['fecha_nan'] }}</td>
               <td>{{ usuarios['fecha_inc'] }}</td>
               <td>{{ usuarios['username'] }}</td>
-              <td>{{ usuarios['password'] }}</td>
               <td>
                   <a href="{{ url_for('usuarios.editar_user', id_user=usuarios['id_user']) }}">Editar</a> | 
                   <a href="{{ url_for('usuarios.eliminar_user', id_user=usuarios['id_user']) }}" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
