@@ -8,16 +8,25 @@ def index():
     conn = sqlite3.connect("star_service.db")
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM servicio")
+    
+    # Consulta con LEFT JOIN para mostrar servicios y datos de vehículos
+    cursor.execute("""
+    SELECT servicio.id, servicio.fecha_pago_servicio, servicio.monto, servicio.descripcion, 
+           vehiculo.placa, vehiculo.marca
+    FROM servicio
+    LEFT JOIN vehiculo ON servicio.id_vehiculo = vehiculo.id;
+    """)
     servicios = cursor.fetchall()
     conn.close()
-    return render_template('index_servicio.html',servicios=servicios)
+
+    return render_template('index_servicio.html', servicios=servicios)
+
 
 @servicios_bp.route("/crear_s", methods=["GET", "POST"])
 def crear_s():
     if request.method == "POST":
         # Recupera los datos del formulario
-        ci_afiliado = request.form["ci_afiliado"]
+        id_vehiculo = request.form.get("id_vehiculo")
         fecha_pago_servicio = request.form['fecha_pago_servicio']
         monto = request.form['monto']
         descripcion = request.form['descripcion']
@@ -27,9 +36,9 @@ def crear_s():
         cursor = conn.cursor()
         try:
             cursor.execute("""
-                INSERT INTO servicio (ci_afiliado, fecha_pago_servicio, monto, descripcion) 
+                INSERT INTO servicio (id_vehiculo, fecha_pago_servicio, monto, descripcion) 
                 VALUES (?, ?, ?, ?)
-            """, (ci_afiliado, fecha_pago_servicio, monto, descripcion))
+            """, (id_vehiculo, fecha_pago_servicio, monto, descripcion))
             conn.commit()
         except sqlite3.IntegrityError as e:
             conn.rollback()
@@ -39,15 +48,15 @@ def crear_s():
         
         return redirect(url_for('servicios.index'))
     
-    # Obtener afiliados para el formulario
+    # Obtener vehículos para el formulario
     conn = sqlite3.connect("star_service.db")
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
-    cursor.execute("SELECT ci, nombres FROM afiliado")
-    afiliados = cursor.fetchall()
+    cursor.execute("SELECT id, placa, marca FROM vehiculo")
+    vehiculos = cursor.fetchall()
     conn.close()
     
-    return render_template("crear_s.html", afiliados=afiliados)
+    return render_template("crear_s.html", vehiculos=vehiculos)
 
 
 @servicios_bp.route("/editar_s/<int:id>", methods=["GET", "POST"])
@@ -56,13 +65,12 @@ def editar_s(id):
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
     
-    # Obtener datos del vehículo a editar
+    # Obtener datos del servicio a editar
     cursor.execute("SELECT * FROM servicio WHERE id = ?", (id,))
     servicio = cursor.fetchone()
 
-    # Si es POST, actualizar los datos
     if request.method == "POST":
-        ci_afiliado = request.form["ci_afiliado"]
+        id_vehiculo = request.form.get("id_vehiculo")
         fecha_pago_servicio = request.form['fecha_pago_servicio']
         monto = request.form['monto']
         descripcion = request.form['descripcion']
@@ -70,9 +78,9 @@ def editar_s(id):
         try:
             cursor.execute("""
                 UPDATE servicio 
-                SET ci_afiliado = ?, fecha_pago_servicio = ?, monto = ?, descripcion = ?
+                SET id_vehiculo = ?, fecha_pago_servicio = ?, monto = ?, descripcion = ?
                 WHERE id = ?
-            """, (ci_afiliado, fecha_pago_servicio, monto, descripcion, id))
+            """, (id_vehiculo, fecha_pago_servicio, monto, descripcion, id))
             conn.commit()
         except sqlite3.IntegrityError as e:
             conn.rollback()
@@ -82,12 +90,12 @@ def editar_s(id):
 
         return redirect(url_for('servicios.index'))
 
-    # Obtener la lista de afiliados para el formulario
-    cursor.execute("SELECT ci, nombres FROM afiliado")
-    afiliados = cursor.fetchall()
+    # Obtener la lista de vehículos para el formulario
+    cursor.execute("SELECT id, placa, marca FROM vehiculo")
+    vehiculos = cursor.fetchall()
     conn.close()
 
-    return render_template("editar_s.html", servicio=servicio, afiliados=afiliados)
+    return render_template("editar_s.html", servicio=servicio, vehiculos=vehiculos)
 
 
 @servicios_bp.route("/eliminar_s/<int:id>")
@@ -98,4 +106,3 @@ def eliminar_s(id):
     conn.commit()
     conn.close()
     return redirect(url_for('servicios.index'))
-

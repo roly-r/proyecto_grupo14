@@ -6,10 +6,10 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>CI Afiliado</th>
+                <th>Placa Automóvil</th>
                 <th>Fecha</th>
                 <th>Monto</th>
-                <th>Descripcion</th>
+                <th>Descripción</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -17,7 +17,7 @@
             {% for servicio in servicios %}
             <tr>
                 <td>{{ servicio['id'] }}</td>
-                <td>{{ servicio['ci_afiliado'] }}</td>
+                <td>{{ servicio['placa'] or 'No asociado' }}</td>
                 <td>{{ servicio['fecha_pago_servicio'] }}</td>
                 <td>{{ servicio['monto'] }}</td>
                 <td>{{ servicio['descripcion'] }}</td>
@@ -30,7 +30,6 @@
         </tbody>
     </table>
     
-    <a href="{{ url_for('servicios.crear_s') }}" class="btn btn-primary">Crear Nuevo servicio</a>
+    <a href="{{ url_for('servicios.crear_s') }}" class="btn btn-primary">Crear Nuevo Servicio</a>
 </div>
-
 {% include 'footer.html' %}

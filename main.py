@@ -59,11 +59,11 @@ def init_database():
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS servicio (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            ci_afiliado INT,
+            id_vehiculo INT,
             fecha_pago_servicio DATE NOT NULL,
             monto DECIMAL(10, 2),
             descripcion TEXT,
-            FOREIGN KEY (ci_afiliado) REFERENCES afiliado(ci)
+            FOREIGN KEY (id_vehiculo) REFERENCES vehiculo(id)
         )
     """)
     

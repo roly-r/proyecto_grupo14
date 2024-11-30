@@ -2,30 +2,26 @@
 <br><br><br>
 <form action="{{ url_for('servicios.crear_s') }}" method="POST">
     <div class="mb-3">
-        <label for="ci_afiliado" class="form-label">CI Afiliado</label>
-        <select name="ci_afiliado" class="form-control" required>
-            <option value="">Seleccionar Afiliado</option>
-            {% for afiliado in afiliados %}
-            <option value="{{ afiliado['ci'] }}" {% if vehiculo and afiliado['ci'] == vehiculo['ci_afiliado'] %}selected{% endif %}>
-              {{ afiliado['ci'] }} - {{ afiliado['nombres'] }}
-            </option>
+        <label for="id_vehiculo" class="form-label">Placa Vehículo</label>
+        <select name="id_vehiculo" class="form-control" required>
+            <option value="">Seleccionar automóvil</option>
+            {% for vehiculo in vehiculos %}
+            <option value="{{ vehiculo['id'] }}">{{ vehiculo['placa'] }} - {{ vehiculo['marca'] }}</option>
             {% endfor %}
-          </select>
-      </div>
+        </select>
+    </div>
     <div class="form-group">
         <label for="fecha_pago_servicio">Fecha</label>
         <input type="date" class="form-control" name="fecha_pago_servicio" required>
     </div>
     <div class="form-group">
         <label for="monto">Monto</label>
-        <input type="text" class="form-control" name="monto" required>
+        <input type="number" step="0.01" class="form-control" name="monto" required>
     </div>
     <div class="form-group">
-        <label for="descripcion">Descripcion</label>
+        <label for="descripcion">Descripción</label>
         <input type="text" class="form-control" name="descripcion" required>
     </div>
-    
     <button type="submit" class="btn btn-primary">Crear Servicio</button>
 </form>
-
 {% include 'footer.html' %}
