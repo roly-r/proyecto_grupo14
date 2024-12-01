@@ -1,13 +1,135 @@
-{% include 'header.html' %}
-<br><br><br>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STAR SERVICE - Radiotaxis</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/estilo.css') }}">
 
-<h1 class="Principal" color="red">STAR SERVICE</h1>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" 
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <style>
+        .hero-section {
+            background: #011224;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            background-image: url('/static/images/servicio local.jpg');
+            background-size: cover;
 
-<div class="container">
-    <ul>
-        <li><a href="/login">Login</a></li>
-        <li><a href="{{url_for('usuarios.crear_user')}}">Registrarse</a></li>
-    </ul>
-</div>
+        }
+        .footer {
+            background: #011224;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">STAR SERVICE</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contacto">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="hero-section">
+        <center>
+        <div class="card text-bg-dark mb-3" style="max-width: 900px;" >
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="/static/images/logo.webp" class="img-fluid rounded-start" alt="logotipo">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">Bienvenido a STAR SERVICE</h5>
+                  <p class="card text-bg-dark mb-3 ">STAR SERVICE es una empresa de radiotaxis comprometida con brindar el mejor servicio de transporte seguro,
+                     rápido y confiable en la ciudad. Con un equipo de conductores altamente capacitados y vehículos modernos, ofrecemos un servicio personalizado 
+                     para que cada viaje sea cómodo y puntual. Ya sea para tus traslados diarios o viajes especiales</p>
 
-{% include 'footer.html' %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </center>
+    </div>
+
+    <h1>Nuestros Servicios</h1>
+    
+    <div class="container">
+            <div class="cardi">
+                <figure>
+                    <img src="/static/images/servicio linea.jpg">
+                </figure>
+                <div class="contenido">
+                    <h3>Radiotaxi rápido</h3>
+                    <p>
+                        Llama a un taxi en minutos, con la garantía de un servicio ágil y eficiente.
+                    </p>
+                    
+                </div>
+            </div>
+
+            <div class="cardi">
+                <figure>
+                    <img src="/static/images/servicios seguro.webp">
+                </figure>
+                <div class="contenido">
+                    <h3>Conductor profesional</h3>
+                    <p>
+                        Nuestros conductores están altamente capacitados y siempre con actitud cordial.
+                    </p>
+                    
+                </div>
+            </div>
+
+            <div class="cardi">
+                <figure>
+                    <img src="/static/images/servicio confiable.jpg">
+                </figure>
+                <div class="contenido">
+                    <h3>Viajes seguros</h3>
+                    <p>
+                        La seguridad de nuestros pasajeros es nuestra prioridad, con vehículos revisados regularmente.
+                    </p>
+                    
+                </div>
+            </div>
+
+         </div>
+  
+         <footer>
+            <p>&copy; 2024 STAR SERVICE. Todos los derechos reservados.</p>
+            <div class="wrapper">
+                <ul>
+                <li class="facebook"><a href="#"><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a></li>
+                <li class="twitter"><a href="#"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a></li>
+                 <li class="instagram"><a href="#"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a></li>
+                <li class="google"><a href="#"><i class="fa fa-google fa-2x" aria-hidden="true"></i></a></li>
+                <li class="whatsapp"><a href="#"><i class="fa fa-whatsapp fa-2x" aria-hidden="true"></i></a></li>
+                </ul>
+             </div> 
+         </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

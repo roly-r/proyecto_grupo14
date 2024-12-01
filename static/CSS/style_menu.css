@@ -1,0 +1,48 @@
+
+.menu-custom {
+    background-color: #343a40; /* Fondo oscuro */
+    color: #ffffff; /* Texto blanco */
+}
+.menu-custom .nav-link, 
+.menu-custom .dropdown-item {
+    color: #ffffff; /* Enlaces en blanco */
+}
+.menu-custom .nav-link:hover, 
+.menu-custom .dropdown-item:hover {
+    color: #2682a7; /* Color al pasar el cursor */
+}
+.menu-custom .offcanvas-header {
+    background-color: #495057; /* Fondo del encabezado del menú */
+    color: #ffffff;
+}
+/* Estilo de cuadros para títulos */
+.menu-title {
+    background-color: #495057;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+    border: 1px solid #6c757d;
+}
+/* Estilo para íconos */
+.menu-icon {
+    margin-right: 10px;
+    color: #720303;
+}
+/* Estilo tipo card para el menú desplegable */
+.dropdown-menu {
+    background-color: #232324;
+    border: 1px solid #2682a7;
+    border-radius: 10px;
+    padding: 10px;
+}
+.dropdown-item {
+    border-radius: 5px;
+    padding: 8px 12px;
+}
+.dropdown-item:hover {
+    background-color: #495057;
+    color: #ffc107;
+}

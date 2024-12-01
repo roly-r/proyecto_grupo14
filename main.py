@@ -4,6 +4,7 @@ from blueprints.afiliados import afiliados_bp
 from blueprints.servicios import servicios_bp
 from blueprints.usuarios import usuarios_bp
 from blueprints.pagos import pagos_bp
+from blueprints.ingresos import ingresos_bp
 import sqlite3
 
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -19,6 +20,7 @@ app.register_blueprint(afiliados_bp,url_preferix='/afiliados')
 app.register_blueprint(servicios_bp,url_preferix='/servicios')
 app.register_blueprint(usuarios_bp,url_preferix='/usuarios')
 app.register_blueprint(pagos_bp, url_prefix="/pagos")
+app.register_blueprint(ingresos_bp, url_prefix="/ingresos")
 
 @app.route("/")
 def home():
@@ -64,6 +66,19 @@ def init_database():
             monto DECIMAL(10, 2),
             descripcion TEXT,
             FOREIGN KEY (id_vehiculo) REFERENCES vehiculo(id)
+        )
+    """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS ingreso (
+                   
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            ci_afiliado INT,
+            monto REAL NOT NULL,
+            estado TEXT NOT NULL,
+            fecha TEXT NOT NULL,
+            observaciones TEXT,
+            FOREIGN KEY (ci_afiliado) REFERENCES afiliado(ci)
         )
     """)
     
@@ -115,7 +130,7 @@ def login():
         password = request.form['password']
         
         conn =  sqlite3.connect("star_service.db")
-        # Permite obtener registros como diccionario
+        
         conn.row_factory =  sqlite3.Row
         cursor =  conn.cursor()
         cursor.execute("SELECT * FROM usuario WHERE username = ?",(username,))
@@ -127,7 +142,11 @@ def login():
             return redirect('/admin/dashboard')
                 
     return render_template('auth/login.html')
-    
+
+@app.route("/contacto")
+def contacto():
+    return render_template('contacto.html')
+
 @app.route("/logout")
 def logout():
     session.pop('id_user',None)
@@ -137,8 +156,6 @@ def logout():
 @login_required
 def dashboard():
     return render_template('admin/dashboard.html')
-
-
 
 if __name__ == "__main__":
     app.run(debug=True)

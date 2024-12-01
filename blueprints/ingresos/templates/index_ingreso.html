@@ -1,0 +1,38 @@
+{% include 'header.html' %}
+<br><br><br>
+<div class="container mt-5">
+    <h1>Listado de Pago de Ingreso</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>CI Afiliado</th>
+                <th>Monto</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th>Observaciones</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ingreso in ingresos %}
+            <tr>
+                <td>{{ ingreso['id'] }}</td>
+                <td>{{ ingreso['ci_afiliado'] }}</td>
+                <td>{{ ingreso['monto'] }}</td>
+                <td>{{ ingreso['estado'] }}</td>
+                <td>{{ ingreso['fecha'] }}</td>
+                <td>{{ ingreso['observaciones'] }}</td>
+                <td>
+                    <a href="{{ url_for('ingresos.editar_i', id=ingreso['id']) }}">Editar</a> | 
+                    <a href="{{ url_for('ingresos.eliminar_i', id=ingreso['id']) }}" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <a href="{{ url_for('ingresos.crear_i') }}" class="btn btn-primary">Nuevo Pago de Ingreso</a>
+</div>
+
+{% include 'footer.html' %}
