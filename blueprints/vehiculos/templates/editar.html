@@ -1,5 +1,7 @@
 {% include 'header.html' %}
-<br><br><br>
+<br><br>
+<div class="container mt-5" style="max-width: 600px;">
+    <h2 class="fw-bold">EDITAR DATOS DEL VEHICULO</h2>
 <form action="{{ url_for('vehiculos.editar', id=vehiculo['id']) }}" method="POST">
     <div class="mb-3">
         <label for="ci_afiliado" class="form-label">CI Afiliado</label>
@@ -36,7 +38,8 @@
         <label for="observaciones">Observaciones</label>
         <textarea class="form-control" name="observaciones">{{ vehiculo['observaciones'] }}</textarea>
     </div>
-    <button type="submit" class="btn btn-primary">Actualizar Vehículo</button>
+    <BR>
+    <button type="submit" class="btn btn-outline-light">Actualizar Vehículo</button>
 </form>
 
 {% include 'footer.html' %}

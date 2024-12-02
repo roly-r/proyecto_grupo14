@@ -1,9 +1,13 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for,session
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 
 usuarios_bp = Blueprint('usuarios', __name__, template_folder='templates')
 
+def verifica():
+    if 'cargo' not in session or session['cargo'] != "Administrador":
+        return False
+    return True
 
 # Ruta para mostrar el listado 
 @usuarios_bp.route("/usuarios")
@@ -19,6 +23,8 @@ def index_user():
 # Ruta para crear 
 @usuarios_bp.route("/crear_user", methods=["GET", "POST"])
 def crear_user():
+    if not verifica():
+        return redirect(url_for('usuarios.index_user'))
     if request.method == "POST":
         nombre = request.form['nombre']
         apellido = request.form['apellido']
@@ -46,6 +52,8 @@ def crear_user():
 # Ruta para editar 
 @usuarios_bp.route("/editar_user/<int:id_user>", methods=["GET", "POST"])
 def editar_user(id_user):
+    if not verifica():
+        return redirect(url_for('usuarios.index_user'))
     conn = sqlite3.connect("star_service.db")
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
@@ -77,6 +85,8 @@ def editar_user(id_user):
 # Ruta para eliminar 
 @usuarios_bp.route("/eliminar_user/<int:id_user>")
 def eliminar_user(id_user):
+    if not verifica():
+        return redirect(url_for('usuarios.index_user'))
     conn = sqlite3.connect("star_service.db")
     cursor = conn.cursor()
     cursor.execute("DELETE FROM usuario WHERE id_user = ?", (id_user,))

@@ -1,11 +1,10 @@
 {% include 'header.html' %}
 <br><br><br>
 <div class="container mt-5">
-    <h1>Listado de Servicios</h1>
-    <table class="table">
+    <h1 class="fw-bold">LISTADO DE SERVICIOS</h1>
+    <table class="table-gris">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Placa Automóvil</th>
                 <th>Fecha</th>
                 <th>Monto</th>
@@ -16,20 +15,19 @@
         <tbody>
             {% for servicio in servicios %}
             <tr>
-                <td>{{ servicio['id'] }}</td>
                 <td>{{ servicio['placa'] or 'No asociado' }}</td>
                 <td>{{ servicio['fecha_pago_servicio'] }}</td>
                 <td>{{ servicio['monto'] }}</td>
                 <td>{{ servicio['descripcion'] }}</td>
                 <td>
-                    <a href="{{ url_for('servicios.editar_s', id=servicio['id']) }}">Editar</a> | 
-                    <a href="{{ url_for('servicios.eliminar_s', id=servicio['id']) }}" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
+                    <a href="{{ url_for('servicios.editar_s', id=servicio['id']) }}" class="btn btn-outline-info">Editar</a> | 
+                    <a href="{{ url_for('servicios.eliminar_s', id=servicio['id']) }}" onclick="return confirm('¿Estás seguro?')"  class="btn btn-outline-danger">Eliminar</a>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
     
-    <a href="{{ url_for('servicios.crear_s') }}" class="btn btn-primary">Crear Nuevo Servicio</a>
+    <a href="{{ url_for('servicios.crear_s') }}" class="btn btn-outline-light">CREAR NUEVO SERVICIO</a>
 </div>
 {% include 'footer.html' %}

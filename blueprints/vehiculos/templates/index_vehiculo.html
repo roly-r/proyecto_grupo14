@@ -1,11 +1,10 @@
 {% include 'header.html' %}
 <br><br><br>
 <div class="container mt-5">
-    <h1>Listado de Vehículos</h1>
-    <table class="table">
+    <h1 class="fw-bold">LISTADO DE VEHICULOS</h1>
+    <table class="tabla-gris">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>CI Afiliado</th>
                 <th>Marca</th>
                 <th>Modelo</th>
@@ -17,22 +16,21 @@
         <tbody>
             {% for vehiculo in vehiculos %}
             <tr>
-                <td>{{ vehiculo['id'] }}</td>
                 <td>{{ vehiculo['ci_afiliado'] }}</td>
                 <td>{{ vehiculo['marca'] }}</td>
                 <td>{{ vehiculo['modelo'] }}</td>
                 <td>{{ vehiculo['color'] }}</td>
                 <td>{{ vehiculo['placa'] }}</td>
                 <td>
-                    <a href="{{ url_for('vehiculos.editar', id=vehiculo['id']) }}">Editar</a> | 
-                    <a href="{{ url_for('vehiculos.eliminar', id=vehiculo['id']) }}" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
+                    <a href="{{ url_for('vehiculos.editar', id=vehiculo['id']) }}" class="btn btn-outline-info">Editar</a> | 
+                    <a href="{{ url_for('vehiculos.eliminar', id=vehiculo['id']) }}" onclick="return confirm('¿Estás seguro?')" class="btn btn-outline-danger">Eliminar</a>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
     
-    <a href="{{ url_for('vehiculos.crear') }}" class="btn btn-primary">Crear Nuevo Vehículo</a>
+    <a href="{{ url_for('vehiculos.crear') }}" class="btn btn-outline-light">CREAR NUEVO VEHICULO</a>
 </div>
 
 {% include 'footer.html' %}

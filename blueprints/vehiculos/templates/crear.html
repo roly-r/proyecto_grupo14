@@ -1,7 +1,7 @@
 {% include 'header.html' %}
-<br><br><br>
-<h2 class="text-center">REGISTRAR VEHICULO</h2>
+<br><br>
 <div class="container mt-5" style="max-width: 600px;">
+    <h2 class="fw-bold">REGISTRAR VEHICULO</h2>
 <form action="{{ url_for('vehiculos.crear') }}" method="POST">
 
 
@@ -41,7 +41,7 @@
         <textarea class="form-control" name="observaciones"></textarea>
     </div>
     <br>
-    <button type="submit" class="btn btn-primary">GUARDAR</button>
+    <button type="submit" class="btn btn-outline-light">GUARDAR</button>
 
 
 </form>

@@ -1,10 +1,15 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for,session
 import sqlite3
 
 servicios_bp = Blueprint('servicios', __name__, template_folder='templates')
 
+def verifica():
+    if 'cargo' not in session or session['cargo'] != "Administrador":
+        return False
+    return True
+
 @servicios_bp.route("/servicios")
-def index():
+def index_s():
     conn = sqlite3.connect("star_service.db")
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
@@ -24,6 +29,7 @@ def index():
 
 @servicios_bp.route("/crear_s", methods=["GET", "POST"])
 def crear_s():
+    
     if request.method == "POST":
         # Recupera los datos del formulario
         id_vehiculo = request.form.get("id_vehiculo")
@@ -46,7 +52,7 @@ def crear_s():
         finally:
             conn.close()
         
-        return redirect(url_for('servicios.index'))
+        return redirect(url_for('servicios.index_s'))
     
     # Obtener vehículos para el formulario
     conn = sqlite3.connect("star_service.db")
@@ -61,6 +67,7 @@ def crear_s():
 
 @servicios_bp.route("/editar_s/<int:id>", methods=["GET", "POST"])
 def editar_s(id):
+    
     conn = sqlite3.connect("star_service.db")
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
@@ -88,7 +95,7 @@ def editar_s(id):
         finally:
             conn.close()
 
-        return redirect(url_for('servicios.index'))
+        return redirect(url_for('servicios.index_s'))
 
     # Obtener la lista de vehículos para el formulario
     cursor.execute("SELECT id, placa, marca FROM vehiculo")
@@ -100,9 +107,10 @@ def editar_s(id):
 
 @servicios_bp.route("/eliminar_s/<int:id>")
 def eliminar_s(id):
+    
     conn = sqlite3.connect("star_service.db")
     cursor = conn.cursor()
     cursor.execute("DELETE FROM servicio WHERE id = ?", (id,))
     conn.commit()
     conn.close()
-    return redirect(url_for('servicios.index'))
+    return redirect(url_for('servicios.index_s'))

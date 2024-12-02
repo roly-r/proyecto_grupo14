@@ -6,6 +6,83 @@
     <title>Radio Taxis</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style_menu.css') }}">
+    <style>
+        body {
+            font-family:  sans-serif;
+            margin: 40px;
+            background-color: #2e353a; /* Fondo oscuro */
+            color: #e0e0e0; /* Texto claro */
+        }
+
+        h1 {
+            text-align: center;
+            color: #37f8ff; 
+        }
+        h2 {
+            text-align: center;
+            color: #37f8ff; 
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #1e1e1e; /* Fondo de la tabla */
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #333; /* Línea entre filas */
+        }
+
+        th {
+            background-color: #000000; /* Fondo de los encabezados */
+            color: #37f8ff; /* Texto verde claro */
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #252525; /* Filas pares */
+        }
+
+        tr:nth-child(odd) {
+            background-color: #1e1e1e; /* Filas impares */
+        }
+
+        tr:hover {
+            background-color: #000000; /* Efecto hover en verde */
+            color: #121212; /* Texto oscuro */
+            transform: scale(1.01);
+            transition: all 0.2s ease-in-out;
+        }
+
+        td {
+            font-size: 13px;
+            color: #b3b3b3; /* Texto gris claro */
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #4CAF50; /* Resaltar en verde */
+        }
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 30px; /* Espaciado entre input y botón */
+            max-width: 600px;
+            margin: 0 auto; /* Centra horizontalmente */
+        }
+    
+        .search-container input {
+            flex: 1; /* Hace que el input ocupe todo el espacio disponible */
+        }
+        
+    </style>
 </head>
 <body>
     <nav class="navbar bg-body-tertiary fixed-top">
@@ -13,7 +90,7 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div><a class="navbar-brand" href="{{url_for('home')}}">Inicio</a></div>
+            <div><a class="navbar-brand" href="{{url_for('home')}}">INICIO</a></div>
             <div class="offcanvas offcanvas-start menu-custom" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                 <div class="offcanvas-header">
                     <h5 class="offcanvas-title" id="offcanvasNavbarLabel">MENU</h5>
@@ -53,7 +130,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Servicio</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{url_for('servicios.index')}}">Lista de servicios</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('servicios.index_s')}}">Lista de servicios</a></li>
                                 <li><a class="dropdown-item" href="{{url_for('servicios.crear_s')}}">Nuevo servicio</a></li>
                             </ul>
                         </li>

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, send_file
+from flask import Blueprint, render_template, request, redirect, url_for, flash, send_file,session
 from reportlab.lib.pagesizes import letter, landscape
 from reportlab.pdfgen import canvas
 import sqlite3
@@ -6,6 +6,12 @@ import io
 from flask import send_file
 
 pagos_bp = Blueprint('pagos',__name__, template_folder = 'templates')
+
+
+def verifica():
+    if 'cargo' not in session or session['cargo'] != "Administrador":
+        return False
+    return True
 
 #con esta funcion nos conectamos a la base de datos 
 def get_db_connection():
@@ -26,6 +32,8 @@ def index():
 # Crear nuevo pago
 @pagos_bp.route("/create")
 def create_pago():
+    if not verifica():
+        return redirect(url_for('pagos.index'))
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("SELECT nombres, ci FROM afiliado")
@@ -36,6 +44,8 @@ def create_pago():
 # Guardar nuevo pago
 @pagos_bp.route("/create/save", methods=['POST'])
 def save_pago():
+    if not verifica():
+        return redirect(url_for('pagos.index'))
     ci = request.form['ci']
     fecha = request.form['fecha']
     monto = request.form['monto']
@@ -83,6 +93,8 @@ def buscar():
 # Editar pago
 @pagos_bp.route("/edit/<int:cod_pm>")
 def edit_pago(cod_pm):
+    if not verifica():
+        return redirect(url_for('pagos.index'))
     conn = get_db_connection()
     cursor = conn.cursor()
     
@@ -106,6 +118,8 @@ def edit_pago(cod_pm):
 # Actualizar pago
 @pagos_bp.route("/edit/update/<int:cod_pm>", methods=['POST'])
 def update_pago(cod_pm):
+    if not verifica():
+        return redirect(url_for('pagos.index'))
     ci = request.form['ci']
     fecha = request.form['fecha']
     monto = request.form['monto']
@@ -154,6 +168,8 @@ def update_pago(cod_pm):
 # Eliminar pago
 @pagos_bp.route("/delete/<int:cod_pm>")
 def delete_pago(cod_pm):
+    if not verifica():
+        return redirect(url_for('pagos.index'))
     # Conectamos a la base de datos
     conn = get_db_connection()
     cursor = conn.cursor()

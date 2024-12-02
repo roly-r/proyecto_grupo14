@@ -1,7 +1,12 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for,session
 import sqlite3
 
 vehiculos_bp = Blueprint('vehiculos', __name__, template_folder='templates')
+
+def verifica():
+    if 'cargo' not in session or session['cargo'] != "Administrador":
+        return False
+    return True
 
 @vehiculos_bp.route("/vehiculos")
 def index():
@@ -15,6 +20,8 @@ def index():
 
 @vehiculos_bp.route("/crear", methods=["GET", "POST"])
 def crear():
+    if not verifica():
+        return redirect(url_for('vehiculos.index'))
     if request.method == "POST":
         # Recupera los datos del formulario
         ci_afiliado = request.form["ci_afiliado"]
@@ -55,6 +62,8 @@ def crear():
 
 @vehiculos_bp.route("/editar/<int:id>", methods=["GET", "POST"])
 def editar(id):
+    if not verifica():
+        return redirect(url_for('vehiculos.index'))
     conn = sqlite3.connect("star_service.db")
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
@@ -98,6 +107,8 @@ def editar(id):
 
 @vehiculos_bp.route("/eliminar/<int:id>")
 def eliminar(id):
+    if not verifica():
+        return redirect(url_for('vehiculos.index'))
     conn = sqlite3.connect("star_service.db")
     cursor = conn.cursor()
     cursor.execute("DELETE FROM vehiculo WHERE id = ?", (id,))

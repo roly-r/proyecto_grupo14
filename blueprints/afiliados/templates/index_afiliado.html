@@ -1,10 +1,25 @@
 {% include 'header.html' %}
+<br><br>
 
-<h1>LISTA DE AFILIADOS</h1>
+<div class="container mt-4">
+  <h1 class="fw-bold">LISTA DE AFILIADOS</h1>
 
-<a href="{{url_for('afiliados.afiliado_crear')}}" class="btn btn-outline-success">NUEVO</a>
+<br>
 
-<table class="table">
+<form action="{{ url_for('afiliados.buscar_afi') }}" method="POST" class="mb-4">
+  <br>
+  <div class="row g-2 align-items-center">
+      <div class="search-container">
+          
+          <input type="text" name="termino" id="termino" class="form-control" 
+                 value="{{ termino | default('') }}" placeholder="Ingrese CI:" required>
+
+          <button type="submit" class="btn btn-outline-info">Buscar</button>
+      </div>
+  </div>
+</form>
+
+<table class="tabla-gris">
     <thead>
       <tr>
         <th scope="col">CI</th>
@@ -17,9 +32,10 @@
         <th scope="col">NRO LICENCIA</th>
         <th></th>
         <th></th>
+        <th></th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="table-group-divider">
         {% for item in afiliados %}
       <tr>
         <th scope="row">{{item['ci']}}</th>
@@ -30,10 +46,22 @@
         <td>{{item['telefono']}}</td>
         <td>{{item['fecha_incorporacion']}}</td>
         <td>{{item['nro_licencia']}}</td>
-        <td><a href="/edit/{{item.ci}}" class="btn btn-warning">EDITAR</a></td>
-        <td><a href="/borrar/{{item.ci}}" onclick="return(confirm('Esta seguro?'))" class="btn btn-danger">ELIMINAR</a></td>
+        
+        <td>
+          <a href="/edit/{{item.ci}}" class="btn btn-outline-info">EDITAR</a>
+        </td>
+        <td>
+          <a href="/borrar/{{item.ci}}" onclick="return(confirm('Esta seguro?'))" class="btn btn-outline-danger">ELIMINAR</a>
+        </td>
+        <td>
+          <a href="{{url_for('afiliados.detalle_afiliado', ci=item.ci)}}" class="btn btn-outline-secondary">DETALLES</a>
+        </td>
+  
       </tr>
-        {% endfor %}
+        {% endfor %} 
     </tbody>
   </table>
+  <div >
+    <a href="{{url_for('afiliados.afiliado_crear')}}" class="btn btn-outline-light" >NUEVO</a>
+  </div>
 {% include 'footer.html' %}

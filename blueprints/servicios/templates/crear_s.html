@@ -1,5 +1,7 @@
 {% include 'header.html' %}
-<br><br><br>
+<br><br>
+<div class="container mt-5" style="max-width: 600px;">
+    <h2 class="fw-bold">NUEVO SERVICIO</h2>
 <form action="{{ url_for('servicios.crear_s') }}" method="POST">
     <div class="mb-3">
         <label for="id_vehiculo" class="form-label">Placa Vehículo</label>
@@ -22,6 +24,7 @@
         <label for="descripcion">Descripción</label>
         <input type="text" class="form-control" name="descripcion" required>
     </div>
-    <button type="submit" class="btn btn-primary">Crear Servicio</button>
+    <br>
+    <button type="submit" class="btn btn-outline-light">CREAR SERVICIO</button>
 </form>
 {% include 'footer.html' %}

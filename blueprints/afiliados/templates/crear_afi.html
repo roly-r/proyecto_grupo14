@@ -1,53 +1,52 @@
 {% include 'header.html' %}
-
-<div class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center mb-3">
+<br><br>
+<div class="container mt-5" style="max-width: 600px;">
         <h2 class="fw-bold">DATOS AFILIADO</h2>
-        <button class="btn btn-report">IMPRIMIR REPORTE</button>
-    </div>
-
+        <!-- <button class="btn btn-report">IMPRIMIR REPORTE</button> -->
+</div>
+<div class="container mt-5" style="max-width: 600px;">
 <form action="{{url_for('afiliados.afiliado_sv')}}" method="POST">
-    <div class="row g-3">
-        <div class="col-md-6">
+    <div class="mb-3">
             <label class="form-label">CI</label>
             <input type="text"  class="form-control" placeholder="Ingrese ci" name="ci">
         </div>
-        <div class="col-md-6">
+        <div class="mb-3">
             <label class="form-label">NOMBRES</label>
             <input type="text" class="form-control" placeholder="Ingrese nombres" name="nombres">
         </div>
-        <div class="col-md-6">
+        <div class="mb-3">
             <label class="form-label">APELLIDOS</label>
             <input type="text" class="form-control" placeholder="Ingrese apellidos" name="apellidos">
         </div>
-        <div class="col-md-6">
+        <div class="mb-3">
             <label class="form-label">DIRECCIÓN</label>
             <input type="text" class="form-control" placeholder="Ingrese dirección" name="direccion">
         </div>
-        <div class="col-md-6">
+        <div class="mb-3">
             <label class="form-label">FECHA NACIMIENTO</label>
             <div class="input-group">
                 <input type="date" class="form-control" name="fecha_nacimiento">
                 <span class="input-group-text"><i class="bi bi-calendar"></i></span>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="mb-3">
             <label class="form-label">TELÉFONO</label>
             <input type="number" class="form-control" placeholder="Ingrese teléfono" name="telefono">
         </div>
-        <div class="col-md-6">
+        <div class="mb-3">
             <label class="form-label">FECHA INCORPORACIÓN</label>
             <div class="input-group">
                 <input type="date" class="form-control" name="fecha_incorporacion">
                 <span class="input-group-text"><i class="bi bi-calendar"></i></span>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="mb-3">
             <label class="form-label">NUM LICENCIA</label>
             <input type="text" class="form-control" placeholder="Ingrese número de licencia" name="nro_licencia">
         </div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
-    </div>
+    
+    <br>
+    <button type="submit" class="btn btn-outline-light" >Enviar</button>
 </form>
-
+</div>
 {% include 'footer.html' %}

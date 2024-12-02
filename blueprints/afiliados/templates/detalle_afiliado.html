@@ -1,0 +1,108 @@
+{% include 'header.html' %}
+<br><br>
+<div class="container mt-5" style="max-width: 800px;">
+    <h2 class="fw-bold">DETALLES DEL AFILIADO</h2>
+    
+    <h3>Datos personales</h3>
+    <ul class="list-group mb-4">
+        <li class="list-group-item"><strong>CI:</strong> {{ afiliado['ci'] }}</li>
+        <li class="list-group-item"><strong>Nombres:</strong> {{ afiliado['nombres'] }}</li>
+        <li class="list-group-item"><strong>Apellidos:</strong> {{ afiliado['apellidos'] }}</li>
+        <li class="list-group-item"><strong>Dirección:</strong> {{ afiliado['direccion'] }}</li>
+        <li class="list-group-item"><strong>Fecha de Nacimiento:</strong> {{ afiliado['fecha_nacimiento'] }}</li>
+        <li class="list-group-item"><strong>Teléfono:</strong> {{ afiliado['telefono'] }}</li>
+        <li class="list-group-item"><strong>Fecha de Incorporación:</strong> {{ afiliado['fecha_incorporacion'] }}</li>
+        <li class="list-group-item"><strong>Número de Licencia:</strong> {{ afiliado['nro_licencia'] }}</li>
+    </ul>
+
+    <h3>Vehiculo</h3>
+    {% if vehiculos %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Color</th>
+                <th>Número de Chasis</th>
+                <th>Placa</th>
+                <th>Observaciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vehiculo in vehiculos %}
+            <tr>
+                <td>{{ vehiculo['marca'] }}</td>
+                <td>{{ vehiculo['modelo'] }}</td>
+                <td>{{ vehiculo['color'] }}</td>
+                <td>{{ vehiculo['numero_chasis'] }}</td>
+                <td>{{ vehiculo['placa'] }}</td>
+                <td>{{ vehiculo['observaciones'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No hay vehículos registrados.</p>
+    {% endif %}
+
+    <h3>Pago de Ingreso</h3>
+    {% if ingresos %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Monto</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th>Observaciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ingreso in ingresos %}
+            <tr>
+                <td>{{ ingreso['monto'] }}</td>
+                <td>{{ ingreso['estado'] }}</td>
+                <td>{{ ingreso['fecha'] }}</td>
+                <td>{{ ingreso['observaciones'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No hay ingresos registrados.</p>
+    {% endif %}
+
+    <h3>Cuotas Mensuales</h3>
+    {% if cuotas %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Monto</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th>Mes</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cuota in cuotas %}
+            <tr>
+                <td>{{ cuota['monto'] }}</td>
+                <td>{{ cuota['estado'] }}</td>
+                <td>{{ cuota['fecha'] }}</td>
+                <td>{{ cuota['mes'] }}</td>
+                <td>{{ cuota['descripcion'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No hay cuotas registradas.</p>
+    {% endif %}
+
+    <a href="{{ url_for('afiliados.index') }}" class="btn btn-outline-light">Volver</a><br><br>
+    <a href="{{ url_for('afiliados.generar_reporte_detalle', ci=afiliado['ci']) }}" class="btn btn-outline-danger">
+        Descargar Reporte en PDF
+    </a>
+</div>
+
+{% include 'footer.html' %}

@@ -1,4 +1,5 @@
 from flask import Flask, render_template,session,request,redirect
+
 from blueprints.vehiculos import vehiculos_bp
 from blueprints.afiliados import afiliados_bp
 from blueprints.servicios import servicios_bp
@@ -10,6 +11,8 @@ import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from functools import wraps
+
+
 
 app = Flask(__name__)
 
@@ -47,7 +50,7 @@ def init_database():
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS vehiculo (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            ci_afiliado INT,
+            ci_afiliado INTEGER,
             marca TEXT NOT NULL,
             modelo TEXT NOT NULL,
             color TEXT NOT NULL,
@@ -61,7 +64,7 @@ def init_database():
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS servicio (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            id_vehiculo INT,
+            id_vehiculo INTEGER,
             fecha_pago_servicio DATE NOT NULL,
             monto DECIMAL(10, 2),
             descripcion TEXT,
@@ -73,7 +76,7 @@ def init_database():
         CREATE TABLE IF NOT EXISTS ingreso (
                    
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            ci_afiliado INT,
+            ci_afiliado INTEGER,
             monto REAL NOT NULL,
             estado TEXT NOT NULL,
             fecha TEXT NOT NULL,
@@ -139,6 +142,7 @@ def login():
         
         if usuario and check_password_hash(usuario['password'],password):
             session['id_user'] = usuario['id_user']
+            session['cargo']=usuario['tipo']
             return redirect('/admin/dashboard')
                 
     return render_template('auth/login.html')
@@ -159,3 +163,4 @@ def dashboard():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
