@@ -15,8 +15,11 @@ def index_ingreso():
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM ingreso")
     ingresos = cursor.fetchall()
+    cursor.execute("SELECT SUM(monto) as total_monto FROM ingreso")
+    total_monto = cursor.fetchone()["total_monto"] or 0 
+
     conn.close()
-    return render_template('index_ingreso.html',ingresos=ingresos)
+    return render_template('index_ingreso.html',ingresos=ingresos, total_monto=total_monto)
 
 @ingresos_bp.route("/crear_i", methods=["GET", "POST"])
 def crear_i():

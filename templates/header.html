@@ -90,7 +90,7 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div><a class="navbar-brand" href="{{url_for('home')}}">INICIO</a></div>
+            <div><a class="navbar-brand" href="/admin/dashboard">INICIO</a></div>
             <div class="offcanvas offcanvas-start menu-custom" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                 <div class="offcanvas-header">
                     <h5 class="offcanvas-title" id="offcanvasNavbarLabel">MENU</h5>
@@ -121,7 +121,7 @@
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Pagos</a>
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Cuota Mensual</a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{{url_for('pagos.index')}}">Lista de Pagos</a></li>
                                 <li><a class="dropdown-item" href="{{url_for('pagos.create_pago')}}">Nuevo pago</a></li>

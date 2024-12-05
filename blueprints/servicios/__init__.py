@@ -19,12 +19,17 @@ def index_s():
     SELECT servicio.id, servicio.fecha_pago_servicio, servicio.monto, servicio.descripcion, 
            vehiculo.placa, vehiculo.marca
     FROM servicio
-    LEFT JOIN vehiculo ON servicio.id_vehiculo = vehiculo.id;
+    LEFT JOIN vehiculo ON servicio.id_vehiculo = vehiculo.id ORDER BY fecha_pago_servicio DESC
     """)
     servicios = cursor.fetchall()
+    
+    cursor.execute("SELECT SUM(monto) as total_monto FROM servicio")
+    total_monto = cursor.fetchone()["total_monto"] or 0 
+
+    
     conn.close()
 
-    return render_template('index_servicio.html', servicios=servicios)
+    return render_template('index_servicio.html', servicios=servicios, total_monto=total_monto)
 
 
 @servicios_bp.route("/crear_s", methods=["GET", "POST"])

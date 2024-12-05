@@ -18,7 +18,7 @@ def index():
     conn.row_factory=sqlite3.Row
 
     cur=conn.cursor()
-    cur.execute("SELECT * FROM afiliado")
+    cur.execute("SELECT * FROM afiliado ORDER BY fecha_incorporacion DESC")
     afiliados=cur.fetchall()
     return render_template("index_afiliado.html",afiliados=afiliados)
 
@@ -44,6 +44,8 @@ def detalle_afiliado(ci):
     cur.execute("SELECT * FROM COUTA_MENSUAL WHERE ci = ?", (ci,))
     cuotas = cur.fetchall()
 
+    total_cuotas = sum([cuota['monto'] for cuota in cuotas])
+
     conn.close()
 
     return render_template(
@@ -52,6 +54,7 @@ def detalle_afiliado(ci):
         vehiculos=vehiculos,
         ingresos=ingresos,
         cuotas=cuotas,
+        total_cuotas=total_cuotas
     )
 
 
@@ -174,6 +177,7 @@ def generar_reporte_detalle(ci):
 
         cur.execute("SELECT * FROM COUTA_MENSUAL WHERE ci = ?", (ci,))
         cuotas = cur.fetchall()
+        total_cuotas = sum([cuota['monto'] for cuota in cuotas])  # Calcular el total de cuotas
         conn.close()
 
         if not afiliado:
@@ -198,8 +202,8 @@ def generar_reporte_detalle(ci):
         c.drawCentredString(width / 2, height - 140, f"Reporte Detallado - {afiliado['nombres']} {afiliado['apellidos']}")
 
         # Datos del afiliado
-        c.setFont("Helvetica-Bold", 12)
-        c.drawString(50, height - 180, "Datos del Afiliado:")
+        c.setFont("Helvetica-Bold", 14)
+        c.drawString(50, height - 180, "DATOS DEL AFILIADO:")
         c.setFont("Helvetica", 10)
         c.drawString(50, height - 200, f"Nombres: {afiliado['nombres']} {afiliado['apellidos']}")
         c.drawString(50, height - 220, f"CI: {afiliado['ci']}")
@@ -212,8 +216,8 @@ def generar_reporte_detalle(ci):
         y = height - 360
 
         # Datos de vehículos
-        c.setFont("Helvetica-Bold", 12)
-        c.drawString(50, y, "Vehículo Registrado:")
+        c.setFont("Helvetica-Bold", 14)
+        c.drawString(50, y, "VEHICULO REGISTRADO:")
         y -= 20
         if vehiculos:
             c.setFont("Helvetica", 10)
@@ -234,7 +238,7 @@ def generar_reporte_detalle(ci):
 
         # Ingresos (en tabla)
         c.setFont("Helvetica-Bold", 12)
-        c.drawString(50, y, "Pago de Ingreso:")
+        c.drawString(50, y, "PAGO DE INGRESO:")
         y -= 20
         if ingresos:
             c.setFont("Helvetica", 10)
@@ -246,18 +250,23 @@ def generar_reporte_detalle(ci):
                 if y < 50:  # Salto de página
                     c.showPage()
                     y = height - 50
+            c.setFont("Helvetica-Bold", 12)
+            y -= 20
+            c.drawString(50, y, f"Pago de Ingreso: {ingreso['monto']:<12} Bs.")
         else:
             c.setFont("Helvetica", 10)
             c.drawString(50, y, "No hay ingresos registrados.")
             y -= 20
 
+        y -= 30
+
         # Cuotas Mensuales (en tabla)
         c.setFont("Helvetica-Bold", 12)
-        c.drawString(50, y, "Cuotas Mensuales:")
+        c.drawString(50, y, "CUOTAS MENSUALES:")
         y -= 20
         if cuotas:
             c.setFont("Helvetica", 10)
-            c.drawString(50, y, "Monto       Estado       Fecha         Mes")
+            c.drawString(50, y, "Monto       Estado       Fecha            Mes")
             y -= 15
             for cuota in cuotas:
                 c.drawString(50, y, f"{cuota['monto']:<12} {cuota['estado']:<12} {cuota['fecha']:<12} {cuota['mes']}")
@@ -265,6 +274,11 @@ def generar_reporte_detalle(ci):
                 if y < 50:  # Salto de página
                     c.showPage()
                     y = height - 50
+            # Total de Cuotas
+            c.setFont("Helvetica-Bold", 12)
+            y -= 20
+            c.drawString(50, y, f"Total de Cuotas Mensuales: {total_cuotas} Bs.")
+            y -= 20
         else:
             c.setFont("Helvetica", 10)
             c.drawString(50, y, "No hay cuotas registradas.")
@@ -278,3 +292,4 @@ def generar_reporte_detalle(ci):
     except Exception as e:
         flash(f"Error al generar el reporte: {str(e)}", "error")
         return redirect(url_for('afiliados.index'))
+

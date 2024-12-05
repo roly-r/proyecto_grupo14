@@ -24,7 +24,8 @@ def get_db_connection():
 def index():
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM COUTA_MENSUAL")
+    cursor.execute("SELECT * FROM COUTA_MENSUAL ORDER BY fecha DESC")
+
     pagos = cursor.fetchall()
     conn.close()
     return render_template("index_pago.html", pagos=pagos)

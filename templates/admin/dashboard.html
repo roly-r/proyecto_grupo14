@@ -1,38 +1,96 @@
 {% include 'header.html' %}
-<br><br><br>
-<div class="container mt-5">
-    <h1 class="fw-bold">LISTADO DE VEHICULOS</h1>
-    <table class="table-gris">
-        <thead>
-            <tr>
-                <th>CI Afiliado</th>
-                <th>Marca</th>
-                <th>Modelo</th>
-                <th>Color</th>
-                <th>Placa</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for vehiculo in vehiculos %}
-            <tr>
-                <td>{{ vehiculo['id'] }}</td>
-                <td>{{ vehiculo['ci_afiliado'] }}</td>
-                <td>{{ vehiculo['marca'] }}</td>
-                <td>{{ vehiculo['modelo'] }}</td>
-                <td>{{ vehiculo['color'] }}</td>
-                <td>{{ vehiculo['placa'] }}</td>
-                <td>
-                    <a href="{{ url_for('vehiculos.editar', id=vehiculo['id']) }}" class="btn btn-outline-info">Editar</a> | 
-                    <a href="{{ url_for('vehiculos.eliminar', id=vehiculo['id']) }}" class="btn btn-outline-danger" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    
-    <a href="{{ url_for('vehiculos.crear') }}" class="btn btn-outline-light">Crear Nuevo Vehículo</a>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/dash.css') }}">
+</head>
+<body>
+    <br>
+    <br>
+    <br>
+   
+
+<div class="card-group">
+    <div class="card card text-bg-dark mb-3">
+      <img src="/static/images/LAPAZ.jpg" class="card-img-top" alt="ciudad" width="200" height="200">
+      <div class="card-body">
+        <h5 class="card-title">Servicio en La Paz</h5>
+        <p class="card-text"><li>Nuestro servicio ofrece mayor seguridad y comodidad, ya que se solicita a través de aplicaciones móviles o llamadas telefónicas. </li>
+            <li>Rutas personalizadas: Nos adaptamos completamente a las necesidades del pasajero. </li>
+            <li>Áreas de operación: Cubrimos tanto el centro de La Paz como áreas residenciales y suburbanas.</li></p>
+        
+      </div>
+    </div>
+    <div class="card card text-bg-dark mb-3">
+      <img src="/static/images/logo.webp" class="card-img-top" alt="..." width="200" height="200">
+      <div class="card-body">
+        <h5 class="card-title">Nuestras Ventajas</h5>
+        <p class="card-text"> <li>Seguridad</li> <li>Comodidad</li> <li>Disponibilidad</li> <li>Puntualidad y Rapidez</li>
+        <li>Transparencia en tarifas</li> <li>Confianza</li></p>
+       
+      </div>
+    </div>
+    <div class="card card text-bg-dark mb-3">
+      <img src="/static/images/mapa.jpg" class="card-img-top" alt="..." width="200" height="200">
+      <div class="card-body">
+        <h5 class="card-title">Servicio en El Alto</h5>
+        <p class="card-text"><li> Nuestro servicio ofrece mayor seguridad, ya que se solicita a través de llamadas telefónicas o aplicaciones móviles. </li>
+           <li> Flexibilidad: Permitimos recorridos personalizados hacia destinos específicos en El Alto o incluso hacia La Paz. </li>
+            <li> Uso frecuente: Somos populares para trayectos nocturnos o para viajes de mayor distancia, como al Aeropuerto Internacional de El Alto. </li></p>
+        
+      </div>
+    </div>
+  </div>
+
+
+  <div class="mt-4">
+    <h3 class="mb-3">Resumen de Servicios</h3>
+    <ol class="list-group list-group-numbered">
+      <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold">Viajes a Zonas Residenciales</div>
+          Clientes satisfechos por nuestra puntualidad y comodidad.
+        </div>
+        <span class="badge text-bg-primary rounded-pill">1</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold">Servicios de Transporte</div>
+          Excelente servicio nocturno y diurno en El Alto y La Paz.
+        </div>
+        <span class="badge text-bg-primary rounded-pill">2</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold">Traslados al Aeropuerto</div>
+          Excelente servicio , rapido y eficiente para el aeropuerto de El Alto.
+        </div>
+        <span class="badge text-bg-primary rounded-pill">3</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold">Servicios Corporativos</div>
+          Eficiencia en la recepcion de peticiones y servicios.
+        </div>
+        <span class="badge text-bg-primary rounded-pill">4</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold">Eventos Especiales</div>
+          Movilidad eficiente para transporte a eventos.
+        </div>
+        <span class="badge text-bg-primary rounded-pill">5</span>
+      </li>
+    </ol>
+  </div>
 </div>
+
+</body>
+</html>
 
 
 {% include 'footer.html' %}

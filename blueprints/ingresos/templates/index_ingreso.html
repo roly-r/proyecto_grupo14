@@ -5,7 +5,7 @@
     <table class="table-gris">
         <thead>
             <tr>
-                <th>ID</th>
+                <!-- <th>ID</th> -->
                 <th>CI Afiliado</th>
                 <th>Monto</th>
                 <th>Estado</th>
@@ -17,7 +17,7 @@
         <tbody>
             {% for ingreso in ingresos %}
             <tr>
-                <td>{{ ingreso['id'] }}</td>
+                <!-- <td>{{ ingreso['id'] }}</td> -->
                 <td>{{ ingreso['ci_afiliado'] }}</td>
                 <td>{{ ingreso['monto'] }}</td>
                 <td>{{ ingreso['estado'] }}</td>
@@ -31,8 +31,14 @@
             {% endfor %}
         </tbody>
     </table>
+
+    
     
     <a href="{{ url_for('ingresos.crear_i') }}" class="btn btn-outline-light">Nuevo Pago de Ingreso</a>
+</div>
+
+<div class="container mt-5">
+    <h3 class="fw-bold">Monto Total: {{ total_monto }}</h3>
 </div>
 
 {% include 'footer.html' %}

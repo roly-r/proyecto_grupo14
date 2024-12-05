@@ -1,0 +1,108 @@
+/* General */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #2c3e50;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* Encabezados */
+h3 {
+    color: #2c3e50;
+    font-weight: bold;
+    border-bottom: 2px solid #05c7e0;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* Card Group */
+.card-group {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #2c3e50;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 15px;
+    
+}
+
+.card-title {
+    color: #05c7e0;
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.card-text {
+    color: #666;
+    font-size: 0.95em;
+    line-height: 1.5;
+}
+
+.card-text li {
+    margin-bottom: 10px;
+    padding-left: 10px;
+    position: relative;
+}
+
+.card-text li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #05c7e0;
+    font-size: 1.2em;
+}
+
+/* List Group */
+.list-group {
+    margin-top: 20px;
+}
+
+.list-group-item {
+    background-color: #cad4ee;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.list-group-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.list-group-item .fw-bold {
+    color: #05c7e0;
+    font-size: 1em;
+    
+}
+
+.list-group-item .badge {
+    background-color: #05c7e0;
+    font-size: 0.85em;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
