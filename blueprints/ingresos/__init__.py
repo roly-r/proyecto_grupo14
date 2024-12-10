@@ -1,7 +1,15 @@
 from flask import Blueprint, render_template, request, redirect, url_for,session
 import sqlite3
-
+from functools import wraps
 ingresos_bp = Blueprint('ingresos', __name__, template_folder='templates')
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'id_user' not in session:
+            return redirect("/login")
+        return f(*args, **kwargs)
+    return decorated_function
 
 def verifica():
     if 'cargo' not in session or session['cargo'] != "Administrador":
@@ -9,6 +17,7 @@ def verifica():
     return True
 
 @ingresos_bp.route("/ingresos")
+@login_required
 def index_ingreso():
     conn = sqlite3.connect("star_service.db")
     conn.row_factory = sqlite3.Row
@@ -22,6 +31,7 @@ def index_ingreso():
     return render_template('index_ingreso.html',ingresos=ingresos, total_monto=total_monto)
 
 @ingresos_bp.route("/crear_i", methods=["GET", "POST"])
+@login_required
 def crear_i():
     if not verifica():
         return redirect(url_for('ingresos.index_ingreso'))
@@ -62,6 +72,7 @@ def crear_i():
 
 
 @ingresos_bp.route("/editar_i/<int:id>", methods=["GET", "POST"])
+@login_required
 def editar_i(id):
     if not verifica():
         return redirect(url_for('ingresos.index_ingreso'))
@@ -69,7 +80,7 @@ def editar_i(id):
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
     
-    # Obtener datos del vehículo a editar
+    # Obtener datos del ingreso a editar
     cursor.execute("SELECT * FROM ingreso WHERE id = ?", (id,))
     ingreso = cursor.fetchone()
 
@@ -105,6 +116,7 @@ def editar_i(id):
 
 
 @ingresos_bp.route("/eliminar_i/<int:id>")
+@login_required
 def eliminar_i(id):
     if not verifica():
         return redirect(url_for('ingresos.index_ingreso'))

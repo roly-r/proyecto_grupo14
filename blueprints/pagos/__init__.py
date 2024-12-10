@@ -4,9 +4,16 @@ from reportlab.pdfgen import canvas
 import sqlite3
 import io
 from flask import send_file
-
+from functools import wraps
 pagos_bp = Blueprint('pagos',__name__, template_folder = 'templates')
 
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'id_user' not in session:
+            return redirect("/login")
+        return f(*args, **kwargs)
+    return decorated_function
 
 def verifica():
     if 'cargo' not in session or session['cargo'] != "Administrador":
@@ -21,6 +28,7 @@ def get_db_connection():
 
 # Ruta principal
 @pagos_bp.route("/pago")
+@login_required
 def index():
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -32,6 +40,7 @@ def index():
 
 # Crear nuevo pago
 @pagos_bp.route("/create")
+@login_required
 def create_pago():
     if not verifica():
         return redirect(url_for('pagos.index'))
@@ -44,6 +53,7 @@ def create_pago():
 
 # Guardar nuevo pago
 @pagos_bp.route("/create/save", methods=['POST'])
+@login_required
 def save_pago():
     if not verifica():
         return redirect(url_for('pagos.index'))
@@ -76,6 +86,7 @@ def save_pago():
 
 # Buscar pagos
 @pagos_bp.route('/buscar', methods=['GET', 'POST'])
+@login_required
 def buscar():
     if request.method == 'POST':
         termino = request.form.get('termino', '')
@@ -93,6 +104,7 @@ def buscar():
 
 # Editar pago
 @pagos_bp.route("/edit/<int:cod_pm>")
+@login_required
 def edit_pago(cod_pm):
     if not verifica():
         return redirect(url_for('pagos.index'))
@@ -118,6 +130,7 @@ def edit_pago(cod_pm):
 
 # Actualizar pago
 @pagos_bp.route("/edit/update/<int:cod_pm>", methods=['POST'])
+@login_required
 def update_pago(cod_pm):
     if not verifica():
         return redirect(url_for('pagos.index'))
@@ -168,6 +181,7 @@ def update_pago(cod_pm):
 
 # Eliminar pago
 @pagos_bp.route("/delete/<int:cod_pm>")
+@login_required
 def delete_pago(cod_pm):
     if not verifica():
         return redirect(url_for('pagos.index'))
@@ -187,6 +201,7 @@ def delete_pago(cod_pm):
 ############################################# GENERAMOS PDF ############################################################
 
 @pagos_bp.route('/reporte_pdf', methods=['GET'])
+@login_required
 def generar_reporte_pdf():
     try:
         conn = sqlite3.connect("star_service.db")
@@ -259,6 +274,7 @@ def generar_reporte_pdf():
 ####################################### REPORTE INDIVIDUAL #############################################################
 
 @pagos_bp.route('/reporte_pdf_busqueda', methods=['GET'])
+@login_required
 def generar_reporte_pdf_busqueda():
     try:
         termino = request.args.get('termino', '')

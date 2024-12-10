@@ -1,8 +1,16 @@
 from flask import Blueprint, render_template, request, redirect, url_for,session
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from functools import wraps
 usuarios_bp = Blueprint('usuarios', __name__, template_folder='templates')
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'id_user' not in session:
+            return redirect("/login")
+        return f(*args, **kwargs)
+    return decorated_function
 
 def verifica():
     if 'cargo' not in session or session['cargo'] != "Administrador":
@@ -11,6 +19,7 @@ def verifica():
 
 # Ruta para mostrar el listado 
 @usuarios_bp.route("/usuarios")
+@login_required
 def index_user():
     conn = sqlite3.connect("star_service.db")
     conn.row_factory = sqlite3.Row
@@ -22,6 +31,7 @@ def index_user():
 
 # Ruta para crear 
 @usuarios_bp.route("/crear_user", methods=["GET", "POST"])
+@login_required
 def crear_user():
     if not verifica():
         return redirect(url_for('usuarios.index_user'))
@@ -51,6 +61,7 @@ def crear_user():
 
 # Ruta para editar 
 @usuarios_bp.route("/editar_user/<int:id_user>", methods=["GET", "POST"])
+@login_required
 def editar_user(id_user):
     if not verifica():
         return redirect(url_for('usuarios.index_user'))
@@ -84,6 +95,7 @@ def editar_user(id_user):
 
 # Ruta para eliminar 
 @usuarios_bp.route("/eliminar_user/<int:id_user>")
+@login_required
 def eliminar_user(id_user):
     if not verifica():
         return redirect(url_for('usuarios.index_user'))

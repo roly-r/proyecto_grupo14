@@ -3,9 +3,20 @@ from flask import Flask,redirect,render_template,url_for,request,Blueprint,sessi
 from reportlab.lib.pagesizes import letter, landscape
 from reportlab.pdfgen import canvas
 import sqlite3
-import io
+
+from functools import wraps
+#proporciona la capacidad de manipular archivo en memoria
+import io 
 
 afiliados_bp = Blueprint('afiliados', __name__, template_folder='templates')
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'id_user' not in session:
+            return redirect("/login")
+        return f(*args, **kwargs)
+    return decorated_function
 
 def verifica():
     if 'cargo' not in session or session['cargo'] != "Administrador":
@@ -13,6 +24,7 @@ def verifica():
     return True
 
 @afiliados_bp.route("/afiliados")
+@login_required
 def index():
     conn=sqlite3.connect("star_service.db")
     conn.row_factory=sqlite3.Row
@@ -23,6 +35,7 @@ def index():
     return render_template("index_afiliado.html",afiliados=afiliados)
 
 @afiliados_bp.route("/detalle/<int:ci>")
+@login_required
 def detalle_afiliado(ci):
     conn = sqlite3.connect("star_service.db")
     conn.row_factory = sqlite3.Row
@@ -59,12 +72,14 @@ def detalle_afiliado(ci):
 
 
 @afiliados_bp.route("/crear_afiliado")
+@login_required
 def afiliado_crear():
     if not verifica():
         return redirect(url_for('afiliados.index'))  # Redirige a la página principal si no es administrador
     return render_template("crear_afi.html")
 
 @afiliados_bp.route("/crear/guarda",methods=['POST'])
+@login_required
 def afiliado_sv():
     if not verifica():
         return redirect(url_for('afiliados.index'))
@@ -88,6 +103,7 @@ def afiliado_sv():
     return redirect(url_for('afiliados.index'))
 
 @afiliados_bp.route("/edit/<int:ci>")
+@login_required
 def afiliado_edit(ci):
     if not verifica():
         return redirect(url_for('afiliados.index'))
@@ -101,6 +117,7 @@ def afiliado_edit(ci):
     return render_template("editar_afi.html",afiliado=afiliado)
 
 @afiliados_bp.route("/update",methods=['POST'])
+@login_required
 def afiliados_update():
     if not verifica():
         return redirect(url_for('afiliados.index'))
@@ -126,6 +143,7 @@ def afiliados_update():
 # Buscar pagos
 
 @afiliados_bp.route('/buscar_afi', methods=['GET', 'POST'])
+@login_required
 def buscar_afi():
     if request.method == 'POST':
         termino = request.form.get('termino', '')
@@ -145,6 +163,7 @@ def buscar_afi():
 
 
 @afiliados_bp.route("/borrar/<int:ci>")
+@login_required
 def afiliados_del(ci):
     if not verifica():
         return redirect(url_for('afiliados.index'))
@@ -159,6 +178,7 @@ def afiliados_del(ci):
 ####################################### REPORTE INDIVIDUAL #############################################################
 
 @afiliados_bp.route('/reporte_detalle/<int:ci>', methods=['GET'])
+@login_required
 def generar_reporte_detalle(ci):
     try:
         # Conectar a la base de datos para obtener los datos del afiliado

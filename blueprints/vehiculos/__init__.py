@@ -1,7 +1,14 @@
 from flask import Blueprint, render_template, request, redirect, url_for,session
 import sqlite3
-
+from functools import wraps
 vehiculos_bp = Blueprint('vehiculos', __name__, template_folder='templates')
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'id_user' not in session:
+            return redirect("/login")
+        return f(*args, **kwargs)
+    return decorated_function
 
 def verifica():
     if 'cargo' not in session or session['cargo'] != "Administrador":
@@ -9,6 +16,7 @@ def verifica():
     return True
 
 @vehiculos_bp.route("/vehiculos")
+@login_required
 def index():
     conn = sqlite3.connect("star_service.db")
     conn.row_factory = sqlite3.Row
@@ -19,6 +27,7 @@ def index():
     return render_template('index_vehiculo.html',vehiculos=vehiculos)
 
 @vehiculos_bp.route("/crear", methods=["GET", "POST"])
+@login_required
 def crear():
     if not verifica():
         return redirect(url_for('vehiculos.index'))
@@ -61,6 +70,7 @@ def crear():
 
 
 @vehiculos_bp.route("/editar/<int:id>", methods=["GET", "POST"])
+@login_required
 def editar(id):
     if not verifica():
         return redirect(url_for('vehiculos.index'))
@@ -106,6 +116,7 @@ def editar(id):
 
 
 @vehiculos_bp.route("/eliminar/<int:id>")
+@login_required
 def eliminar(id):
     if not verifica():
         return redirect(url_for('vehiculos.index'))
